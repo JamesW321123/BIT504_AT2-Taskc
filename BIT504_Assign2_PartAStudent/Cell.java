@@ -54,5 +54,9 @@ public class Cell {
 
 		content = Player.Empty;
 	}
+	public void setContent(Player empty) {
+		// TODO Auto-generated method stub
+		 this.content = empty;
+	}
 		
 }
