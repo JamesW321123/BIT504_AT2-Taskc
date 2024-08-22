@@ -12,12 +12,14 @@ public class Board {
 	/** Constructor to create the game board */
 	public Board() {
 		
-	 //TODO: initialise the cells array using ROWS and COLS constants 
+	 //TODO: initialise the cells array using ROWS and COLS constants...
 
-		
+		cells = new Cell[GameMain.ROWS][GameMain.COLS];
 		for (int row = 0; row < GameMain.ROWS; ++row) {
 			for (int col = 0; col < GameMain.COLS; ++col) {
 				cells[row][col] = new Cell(row, col);
+				cells[row][col].setContent(Player.Empty);
+
 			}
 		}
 	}
@@ -29,10 +31,14 @@ public class Board {
 		// TODO: Check whether the game has ended in a draw. 
 		// Hint: Use a nested loop (see the constructor for an example). Check whether any of the cells content in the board grid are Player.Empty. If they are, it is not a draw.
 		// Hint: Return false if it is not a draw, return true if there are no empty positions left
-		   
-		
-
-		
+		for (int row = 0; row < GameMain.ROWS; row++) {
+            for (int col = 0; col < GameMain.COLS; col++) {
+                if (cells[row][col].content == Player.Empty) {
+                    return false; // Not a draw as there are empty positions
+                }
+            }
+        }
+        return true; // All cells filled, it's a draw	
 	}
 	
 	/** Return true if the current player "thePlayer" has won after making their move  */
@@ -43,8 +49,10 @@ public class Board {
 		
 		 // TODO: Check if the player has 3 in the playerCol.
 		 // Hint: Use the row code above as a starting point, remember that it goes cells[row][column] 
-		
-		
+		for (int row = 0; row < GameMain.ROWS; row++) {
+	        if (cells[row][playerCol].content == thePlayer && cells[row + 1][playerCol + 1].content == thePlayer && cells[row + 2][playerCol + 2].content == thePlayer)
+	            return true;
+	    }
 		
 		 // 3-in-the-diagonal
 		if( cells[0][0].content == thePlayer && cells[1][1].content == thePlayer && cells[2][2].content == thePlayer)
@@ -52,7 +60,10 @@ public class Board {
 		 
 		
 		// TODO: Check the diagonal in the other direction
-		
+		 for (int row = 2; row >= 0; row--) {
+		        if (cells[row][playerCol].content == thePlayer && cells[row + 1][playerCol + 1].content == thePlayer && cells[row + 2][playerCol + 2].content == thePlayer)
+		            return true;
+		    }
 
 		
 		//no winner, keep playing
